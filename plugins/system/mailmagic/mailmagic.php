@@ -57,7 +57,7 @@ try{
 \$result = parent::Send();
 PHP;
 		$phpContent = file_get_contents($source);
-		$phpContent = str_replace('$result = parent::send();', $foobar);
+		$phpContent = str_replace('$result = parent::send();', $foobar, $phpContent);
 
 		$bufferLocation = 'plgSystemMailmagicBuffer://plgSystemMailmagicBufferMail.php';
 

@@ -369,10 +369,10 @@ HTML;
 				// The regex is a non-anchored pattern and does not have a single fixed starting character.
 				// Tell PCRE to spend more time optimizing since, when used on a page load, it will probably be used several times.
 
-				$ret = preg_replace_callback($url_clickable, 'wpMakeURLClickableCallback', $ret);
+				$ret = preg_replace_callback($url_clickable, [__CLASS__, 'wpMakeURLClickableCallback'], $ret);
 
-				$ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', 'wpMakeWebFTPClickableCallback', $ret);
-				$ret = preg_replace_callback('#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', 'wpMakeEmailClickableCallback', $ret);
+				$ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', [__CLASS__, 'wpMakeWebFTPClickableCallback'], $ret);
+				$ret = preg_replace_callback('#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', [__CLASS__, 'wpMakeEmailClickableCallback'], $ret);
 
 				$ret = substr($ret, 1, -1); // Remove our whitespace padding.
 				$r   .= $ret;
