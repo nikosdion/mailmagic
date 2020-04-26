@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>[SUBJECT]</title>
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+			font-size: 11pt;
+			background-color: ghostwhite;
+			text-align: justify;
+		}
+
+		table.wrapper-outer {
+			margin: 2em 0
+		}
+
+		td.wrapper {
+			padding: 1em;
+			background-color: white;
+		}
+
+		div.header {
+			background-color: rebeccapurple;
+			margin: -1em -1em 1em;
+			padding: 1em;
+			text-align: right;
+		}
+
+		div.header a {
+			color: white;
+			text-decoration: none;
+			font-size: 16pt;
+			font-weight: bold;
+		}
+
+		div.footer {
+			color: whitesmoke;
+			background-color: rebeccapurple;
+			margin: 1em -1em -1em;
+			padding: .5em 1em;
+			font-size: 9pt;
+		}
+
+		div.footer a {
+			color: lightgoldenrodyellow;
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<table width="100%" class="wrapper-outer">
+	<tbody>
+	<tr>
+		<td width="10%"></td>
+		<td class="wrapper">
+			<div class="header">
+				<a href="[SITEURL]">
+					[SITENAME]
+				</a>
+			</div>
+			<div class="content">
+				[CONTENT_HTMLIZED]
+			</div>
+			<div class="footer">
+				<p>
+					This is an transactional email sent by <a href="[SITEURL]">[SITENAME]</a> upon your request. Please
+					do not reply to it directly; it is sent from an unmonitored email address.
+				</p>
+				<p>
+					[SITENAME] never sends unsolicited emails.
+					If you suspect that your email address has been used in error or without your permission please
+					contact us as soon as possible by using the Contact link on the aforementioned site.
+				</p>
+			</div>
+		</td>
+		<td width="10%"></td>
+	</tr>
+	</tbody>
+	</table>
+</body>
+</html>
