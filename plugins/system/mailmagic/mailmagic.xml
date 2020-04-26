@@ -6,49 +6,62 @@
   -->
 
 <extension version="3.9.0" type="plugin" group="system" method="upgrade">
-	<name>PLG_SYSTEM_MAILMAGIC</name>
-	<version>1.0.0</version>
-	<creationDate>20120-04-26</creationDate>
+    <name>PLG_SYSTEM_MAILMAGIC</name>
+    <version>1.0.0</version>
+    <creationDate>20120-04-26</creationDate>
 
-	<author>Nicholas K. Dionysopoulos</author>
-	<authorEmail>nicholas@dionysopoulos.me</authorEmail>
-	<authorUrl>https://www.dionysopoulos.me</authorUrl>
+    <author>Nicholas K. Dionysopoulos</author>
+    <authorEmail>nicholas@dionysopoulos.me</authorEmail>
+    <authorUrl>https://www.dionysopoulos.me</authorUrl>
 
-	<copyright>Copyright (c)2020 Nicholas K. Dionysopoulos</copyright>
-	<license>GNU GPL v3 or later</license>
+    <copyright>Copyright (c)2020 Nicholas K. Dionysopoulos</copyright>
+    <license>GNU GPL v3 or later</license>
 
-	<description>PLG_SYSTEM_MAILMAGIC_DESCRIPTION</description>
+    <description>PLG_SYSTEM_MAILMAGIC_DESCRIPTION</description>
 
-	<files>
-		<filename plugin="mailmagic">mailmagic.php</filename>
+    <files>
+        <filename plugin="mailmagic">mailmagic.php</filename>
 
-		<folder>library</folder>
-		<folder>templates</folder>
+        <folder>library</folder>
+        <folder>templates</folder>
 
-		<filename>.htaccess</filename>
-		<filename>web.config</filename>
-	</files>
+        <filename>.htaccess</filename>
+        <filename>web.config</filename>
+    </files>
 
-	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_system_mailmagic.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_system_mailmagic.sys.ini</language>
-	</languages>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_system_mailmagic.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_system_mailmagic.sys.ini</language>
+    </languages>
 
-	<config>
-		<fields name="params">
-			<fieldset name="basic">
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
 
+                <field
+                        name="template"
+						type="filelist"
+						default="default.html"
+						label="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_LABEL"
+						description="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_DESC"
+						directory="plugins/system/mailmagic/templates"
+						filter="\.htm[l]$"
+						hide_none="1"
+						hide_default="1"
+                />
 
-			</fieldset>
+            </fieldset>
 
-		</fields>
-	</config>
+        </fields>
+    </config>
 
-	<!-- Installation script -->
-	<scriptfile>script.plg_system_darkmagic.php</scriptfile>
+    <!-- Installation script -->
+    <scriptfile>script.plg_system_darkmagic.php</scriptfile>
 
-	<!-- Update servers -->
-	<updateservers>
-		<server type="extension" priority="1" name="DarkMagic Updates">https://raw.githubusercontent.com/nikosdion/darkmagic/master/update/plg_darkmagic_updates.xml</server>
-	</updateservers>
+    <!-- Update servers -->
+    <updateservers>
+        <server type="extension" priority="1" name="DarkMagic Updates">
+            https://raw.githubusercontent.com/nikosdion/darkmagic/master/update/plg_darkmagic_updates.xml
+        </server>
+    </updateservers>
 </extension>
