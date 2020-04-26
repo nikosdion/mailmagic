@@ -4,7 +4,8 @@
     <include_path>
       <path value="$PROJECT_DIR$/../../master/joomla-cms" />
       <path value="$USER_HOME$/Sites/dev3/configuration.php" />
-      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/plugins/system/mailmagic/vendor/composer" />
+      <path value="$PROJECT_DIR$/plugins/system/mailmagic/vendor/soundasleep/html2text" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

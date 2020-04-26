@@ -24,6 +24,7 @@
 
         <folder>library</folder>
         <folder>templates</folder>
+        <folder>vendor</folder>
 
         <filename>.htaccess</filename>
         <filename>web.config</filename>
@@ -49,6 +50,19 @@
 						hide_none="1"
 						hide_default="1"
                 />
+
+                <field
+                        name="html2text"
+                        type="radio"
+                        label="PLG_SYSTEM_MAILMAGIC_FIELD_HTML2TEXT_LABEL"
+                        description="PLG_SYSTEM_MAILMAGIC_FIELD_HTML2TEXT_DESC"
+                        class="btn-group btn-group-yesno"
+                        default="1"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+
 
             </fieldset>
 

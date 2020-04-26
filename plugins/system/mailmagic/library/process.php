@@ -13,6 +13,8 @@ use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\Registry\Registry;
+use Soundasleep\Html2Text;
+use Soundasleep\Html2TextException;
 
 /**
  * @package     MailMagic
@@ -48,7 +50,15 @@ final class plgSystemMailmagicProcess
 	 */
 	public static function processEmail(Mail $mailer): void
 	{
-		if ($mailer->ContentType != 'text/plain')
+		$isHtml    = $mailer->ContentType != 'text/plain';
+		$html2text = self::getPluginOption('html2text', 1);
+
+		if ($isHtml && $html2text)
+		{
+			self::makeAlternateText($mailer);
+		}
+
+		if ($isHtml)
 		{
 			return;
 		}
@@ -241,7 +251,7 @@ final class plgSystemMailmagicProcess
 	 * Loads the configured email template's contents
 	 *
 	 * @return  string
-	 * @since   1.0.0
+	 * @since        1.0.0
 	 *
 	 * @noinspection HtmlRequiredLangAttribute
 	 */
@@ -371,8 +381,12 @@ HTML;
 
 				$ret = preg_replace_callback($url_clickable, [__CLASS__, 'wpMakeURLClickableCallback'], $ret);
 
-				$ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', [__CLASS__, 'wpMakeWebFTPClickableCallback'], $ret);
-				$ret = preg_replace_callback('#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', [__CLASS__, 'wpMakeEmailClickableCallback'], $ret);
+				$ret = preg_replace_callback('#([\s>])((www|ftp)\.[\w\\x80-\\xff\#$%&~/.\-;:=,?@\[\]+]+)#is', [
+					__CLASS__, 'wpMakeWebFTPClickableCallback',
+				], $ret);
+				$ret = preg_replace_callback('#([\s>])([.0-9a-z_+-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})#i', [
+					__CLASS__, 'wpMakeEmailClickableCallback',
+				], $ret);
 
 				$ret = substr($ret, 1, -1); // Remove our whitespace padding.
 				$r   .= $ret;
@@ -806,4 +820,35 @@ HTML;
 	}
 
 	// endregion
+
+	/**
+	 * Add an alternate, plain-text representation to an HTML-only email
+	 *
+	 * @param   Mail  $mailer  The mailer object to process
+	 *
+	 * @since  1.0.0
+	 */
+	private static function makeAlternateText(Mail $mailer): void
+	{
+		$altBody = $mailer->AltBody;
+		$altBody = !empty($altBody) ? trim($altBody) : '';
+
+		if (!empty($altBody))
+		{
+			return;
+		}
+
+		require_once __DIR__ . '/../vendor/autoload.php';
+
+		try
+		{
+			$mailer->AltBody = Html2Text::convert($mailer->Body, [
+				'ignore_errors' => true,
+			]);
+		}
+		catch (Html2TextException $e)
+		{
+			// It's not the end of the world...
+		}
+	}
 }

@@ -43,4 +43,4 @@ vendor
 release/**
 
 # Composer (dev)
-vendor
+plugins/system/mailmagic/vendor
