@@ -41,14 +41,14 @@
 
                 <field
                         name="template"
-						type="filelist"
-						default="default.html"
-						label="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_LABEL"
-						description="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_DESC"
-						directory="plugins/system/mailmagic/templates"
-						filter="\.htm[l]$"
-						hide_none="1"
-						hide_default="1"
+                        type="filelist"
+                        default="default.html"
+                        label="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_LABEL"
+                        description="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_DESC"
+                        directory="plugins/system/mailmagic/templates"
+                        filter="\.htm[l]$"
+                        hide_none="1"
+                        hide_default="1"
                 />
 
                 <field
@@ -63,6 +63,20 @@
                     <option value="0">JNO</option>
                 </field>
 
+                <!--<field
+                        name="rules"
+                        type="subform"
+                        label="PLG_SYSTEM_MAILMAGIC_FIELD_RULES_LABEL"
+                        description="PLG_SYSTEM_MAILMAGIC_FIELD_RULES_DESC"
+                        formsource="plugins/system/mailmagic/library/rules.xml"
+                        multiple="true"
+                        min="0"
+                        max="50"
+                        buttons="add,remove,move"
+                        groupByFieldset="false"
+                        __component="com_example"
+                        __client="site"
+                />-->
 
             </fieldset>
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  @package   MailMagic
+  ~  @copyright Copyright (c)2020-2020 Nicholas K. Dionysopoulos
+  ~  @license   GNU General Public License version 3, or later
+  -->
+<form>
+    <fieldset>
+        <field
+                name="option"
+                type="components"
+                label="PLG_SYSTEM_MAILMAGIC_RULES_COMPONENT_LABEL"
+                description="PLG_SYSTEM_MAILMAGIC_RULES_COMPONENT_DESC"
+                default=""
+        >
+            <option value="">PLG_SYSTEM_MAILMAGIC_RULES_COMPONENT_NOTSET</option>
+        </field>
+
+        <field
+                name="callstack"
+                type="text"
+                label="PLG_SYSTEM_MAILMAGIC_RULES_CALLSTACK_LABEL"
+                description="PLG_SYSTEM_MAILMAGIC_RULES_CALLSTACK_DESC"
+                default=""
+        />
+
+        <field
+                name="html"
+                type="list"
+                label="PLG_SYSTEM_MAILMAGIC_RULES_HTML_LABEL"
+                description="PLG_SYSTEM_MAILMAGIC_RULES_HTML_DESC"
+                required="true"
+                default="-1"
+                filter="integer">
+            <option value="-1">PLG_SYSTEM_MAILMAGIC_RULES_HTML_ANY</option>
+            <option value="0">PLG_SYSTEM_MAILMAGIC_RULES_HTML_PLAIN</option>
+            <option value="1">PLG_SYSTEM_MAILMAGIC_RULES_HTML_HTML</option>
+        </field>
+
+        <field
+                name="rule_type"
+                type="list"
+                label="PLG_SYSTEM_MAILMAGIC_RULES_RULE_TYPE_LABEL"
+                description="PLG_SYSTEM_MAILMAGIC_RULES_RULE_TYPE_DESC"
+                required="true"
+                default="as_is">
+            <option value="skip">PLG_SYSTEM_MAILMAGIC_RULES_RULE_TYPE_SKIP</option>
+            <option value="as_is">PLG_SYSTEM_MAILMAGIC_RULES_RULE_TYPE_AS_IS</option>
+            <option value="htmlize">PLG_SYSTEM_MAILMAGIC_RULES_RULE_TYPE_HTMLIZE</option>
+            <option value="regex_body">PLG_SYSTEM_MAILMAGIC_RULES_RULE_TYPE_REGEX_BODY</option>
+        </field>
+
+        <field
+                name="rule_content"
+                type="text"
+                label="PLG_SYSTEM_MAILMAGIC_RULES_RULE_CONTENT_LABEL"
+                description="PLG_SYSTEM_MAILMAGIC_RULES_RULE_CONTENT_DESC"
+                default=""
+                showon="rule_type:regex_body"
+        />
+
+        <field
+                name="match_number"
+                type="number"
+                default="0"
+                label="PLG_SYSTEM_MAILMAGIC_RULES_MATCH_NUMBER_LABEL"
+                description="PLG_SYSTEM_MAILMAGIC_RULES_MATCH_NUMBER_DESC"
+                required="true"
+                max="1000"
+                min="0"
+                step="1"
+                filter="integer"
+                showon="rule_type:regex_body"
+        />
+
+        <field
+                name="template"
+                type="filelist"
+                default=""
+                label="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_LABEL"
+                description="PLG_SYSTEM_MAILMAGIC_FIELD_TEMPLATE_DESC"
+                directory="plugins/system/mailmagic/templates"
+                filter="\.htm[l]$"
+                hide_none="1"
+                showon="rule_type!:skip"
+        />
+
+    </fieldset>
+</form>
