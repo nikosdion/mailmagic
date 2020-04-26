@@ -1,0 +1,23 @@
+{
+  "name": "nikosdion/mailmagic",
+  "type": "project",
+  "description": "Mail Magic - Convert plain text Joomla emails into beautiful, HTML emails",
+  "require": {
+    "php": ">=7.1.0"
+  },
+  "keywords": [
+    "email",
+    "joomla",
+    "html"
+  ],
+  "homepage": "https://github.com/nikosdion/mailmagic",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Nicholas K. Dionysopoulos",
+      "email": "nicholas_NO_SPAM_PLEASE@akeeba.com",
+      "homepage": "http://www.dionysopoulos.me",
+      "role": "Lead Developer"
+    }
+  ]
+}
