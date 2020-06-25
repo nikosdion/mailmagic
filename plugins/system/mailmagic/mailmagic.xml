@@ -114,8 +114,8 @@
 
     <!-- Update servers -->
     <updateservers>
-        <server type="extension" priority="1" name="DarkMagic Updates">
-            https://raw.githubusercontent.com/nikosdion/darkmagic/master/update/plg_darkmagic_updates.xml
+        <server type="extension" priority="1" name="MailMagic Updates">
+            https://raw.githubusercontent.com/nikosdion/mailmagic/main/update/plg_mailmagic_updates.xml
         </server>
     </updateservers>
 </extension>

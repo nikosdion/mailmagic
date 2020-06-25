@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~  @package   MailMagic
+  ~  @copyright Copyright (c)2020-2020 Nicholas K. Dionysopoulos
+  ~  @license   GNU General Public License version 3, or later
+  -->
+<updates>
+    <update>
+        <section>Updates</section>
+        <name>
+            <![CDATA[MailMagic]]>
+        </name>
+        <description>
+            <![CDATA[Updates for MailMagic – Automatically transform your plain text emails to HTML]]>
+        </description>
+        <maintainer>
+            <![CDATA[Nicholas K. Dionysopoulos]]>
+        </maintainer>
+        <maintainerurl>https://www.dionysopoulos.me/</maintainerurl>
+        <type>plugin</type>
+        <element>plg_system_mailmagic</element>
+        <folder>system</folder>
+        <client>0</client>
+        <version>1.0.0</version>
+        <infourl title="MailMagic 1.0.0">
+            <![CDATA[https://github.com/nikosdion/mailmagic/releases/1.0.0]]>
+        </infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">
+                <![CDATA[https://github.com/nikosdion/mailmagic/releases/1.0.0/plg_system_mailmagic.zip]]>
+            </downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <targetplatform name="joomla" version="3.9"/>
+        <php_minimum>7.1</php_minimum>
+        <supported_databases mysql="5.5.3" mariadb="10.1" />
+        <ars-phpcompat version="7.1"/>
+        <ars-phpcompat version="7.2"/>
+        <ars-phpcompat version="7.3"/>
+        <ars-phpcompat version="7.4"/>
+    </update>
+</updates>
