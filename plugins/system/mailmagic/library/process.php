@@ -9,7 +9,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Mail\Mail;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\User\User;
 use Joomla\Registry\Registry;
@@ -34,12 +33,26 @@ final class plgSystemMailmagicProcess
 	private static $pluginParams;
 
 	/**
+	 * HTML email templates root folder
+	 *
+	 * @var   string|null
+	 * @since 1.0.0
+	 */
+	private static $templateRoot;
+
+	/**
 	 * Allowed image file extensions to inline in sent emails
 	 *
 	 * @var   array
 	 * @since 1.0.0
 	 */
 	private static $allowedImageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
+
+	public static function initialize(?Registry $params = null, ?string $templateRoot = null)
+	{
+		self::$pluginParams = $params ?? (new Registry());
+		self::$templateRoot = $templateRoot ?? realpath(__DIR__ . '/..') . '/templates';
+	}
 
 	/**
 	 * Process an email, converting it from plain old text to beautiful HTML
@@ -51,7 +64,7 @@ final class plgSystemMailmagicProcess
 	public static function processEmail(Mail $mailer): void
 	{
 		$isHtml    = $mailer->ContentType != 'text/plain';
-		$html2text = self::getPluginOption('html2text', 1);
+		$html2text = self::$pluginParams->get('html2text', 1);
 
 		if ($isHtml && $html2text)
 		{
@@ -187,32 +200,6 @@ final class plgSystemMailmagicProcess
 	}
 
 	/**
-	 * Returns an option set up in the MailMagic system plugin
-	 *
-	 * @param   string  $key
-	 * @param   null    $default
-	 *
-	 * @return  mixed
-	 *
-	 * @since   1.0.0
-	 */
-	private static function getPluginOption(string $key, $default = null)
-	{
-		// Load the plugin parameters when necessary
-		if (is_null(self::$pluginParams))
-		{
-			$plugin             = PluginHelper::getPlugin('system', 'mailmagic');
-			$plugin             = $plugin ?: (object) ['params' => []];
-			$rawParams          = $plugin->params ?: [];
-			self::$pluginParams = (is_object($rawParams) && ($rawParams instanceof Registry)) ?
-				$rawParams :
-				new Registry($rawParams);
-		}
-
-		return self::$pluginParams->get($key, $default);
-	}
-
-	/**
 	 * Returns a Joomla user object given their email address.
 	 *
 	 * Email address comparison is performed in a case-insensitive manner.
@@ -257,12 +244,12 @@ final class plgSystemMailmagicProcess
 	 */
 	private static function loadTemplate(): string
 	{
-		$templateName = self::getPluginOption('template', 'default.html');
-		$path         = realpath(__DIR__ . '/../templates') . '/' . $templateName;
+		$templateName = self::$pluginParams->get('template', 'default.html');
+		$path         = self::$templateRoot . '/' . $templateName;
 
 		if (!is_file($path))
 		{
-			$path = realpath(__DIR__ . '/../templates') . '/default.html';
+			$path = self::$templateRoot . '/default.html';
 		}
 
 		$text = @file_get_contents($path);

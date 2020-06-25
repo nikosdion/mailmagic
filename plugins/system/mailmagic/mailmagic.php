@@ -7,6 +7,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Log\Log;
 use Joomla\CMS\Plugin\CMSPlugin;
 
 /**
@@ -33,7 +34,7 @@ class plgSystemMailmagic extends CMSPlugin
 	 * @noinspection PhpUnused
 	 *
 	 * @return  void
-	 * @since   1.0.0
+	 * @since        1.0.0
 	 */
 	public function onAfterInitialise(): void
 	{
@@ -43,14 +44,18 @@ class plgSystemMailmagic extends CMSPlugin
 		// Make sure the Joomla mailer isn't loaded yet
 		if (class_exists('Joomla\CMS\Mail\Mail', false))
 		{
+			Log::add('MailMagic: Cannot initialize. Joomla\CMS\Mail\Mail has already been loaded. Please reorder this plugin to be the first one loaded.', Log::CRITICAL);
+
 			return;
 		}
+
+		plgSystemMailmagicProcess::initialize($this->params, realpath(__DIR__ . '/templates'));
 
 		// In-memory patching of Joomla's Joomla\CMS\Mail\Mail (formerly: JMail) class
 		$source     = JPATH_LIBRARIES . '/src/Mail/Mail.php';
 		$foobar     = <<< PHP
 try{
-	\\plgSystemMailmagicProcess::processEmail(\$this);
+	plgSystemMailmagicProcess::processEmail(\$this);
 } catch(Exception \$e) {
 	// It's OK if it fails, we can still send the plain text email anyway.
 }

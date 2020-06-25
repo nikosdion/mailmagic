@@ -8,7 +8,7 @@
 <extension version="3.9.0" type="plugin" group="system" method="upgrade">
     <name>PLG_SYSTEM_MAILMAGIC</name>
     <version>1.0.0</version>
-    <creationDate>20120-04-26</creationDate>
+    <creationDate>2020-06-25</creationDate>
 
     <author>Nicholas K. Dionysopoulos</author>
     <authorEmail>nicholas@dionysopoulos.me</authorEmail>
@@ -50,6 +50,18 @@
                         hide_none="1"
                         hide_default="1"
                 />
+
+                <field
+                        name="inline_images"
+                        type="radio"
+                        label="PLG_SYSTEM_MAILMAGIC_FIELD_INLINE_IMAGES_LABEL"
+                        description="PLG_SYSTEM_MAILMAGIC_FIELD_INLINE_IMAGES_DESC"
+                        class="btn-group btn-group-yesno"
+                        default="1"
+                >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
 
                 <field
                         name="html2text"
