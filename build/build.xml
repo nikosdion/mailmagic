@@ -96,7 +96,7 @@
 
 		<!-- Upload the release files -->
 		<GitHubAsset token="${github.token}" organization="${github.organization}" repository="${github.repository}"
-					 file="${dirs.release}/pkg_sociallogin-${version}.zip"
+					 file="${dirs.release}/plg_system_mailmagic.zip"
 					 releaseId="${github.release.id}" />
 
 		<!-- Publish the release -->
