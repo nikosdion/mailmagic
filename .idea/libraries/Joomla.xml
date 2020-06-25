@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Joomla" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/../../master/joomla-cms/media" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../master/joomla-cms/media" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
