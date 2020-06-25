@@ -109,7 +109,10 @@ final class plgSystemMailmagicProcess
 
 		$mailer->setBody(str_replace($keys, array_values($replacements), $template));
 
-		self::inlineImages($mailer);
+		if (self::$pluginParams->get('inline_images', 1) == 1)
+		{
+			self::inlineImages($mailer);
+		}
 	}
 
 	/**
@@ -127,6 +130,21 @@ final class plgSystemMailmagicProcess
 		if (empty($siteRoot))
 		{
 			$siteRoot = Uri::base(false);
+
+			try
+			{
+				$app     = Factory::getApplication();
+				$isAdmin = $app->isClient('administrator');
+			}
+			catch (Exception $e)
+			{
+				$isAdmin = false;
+			}
+
+			if ($isAdmin && (substr($siteRoot, -14) == '/administrator'))
+			{
+				$siteRoot = substr($siteRoot, 14);
+			}
 
 			self::$pluginParams->set('site_root', $siteRoot);
 		}
@@ -666,22 +684,22 @@ HTML;
 	 *
 	 * @param   Mail  $mailer
 	 *
-	 * @return  string
+	 * @return  void
 	 *
 	 * @since   1.0.0
 	 */
-	private static function inlineImages(Mail $mailer): string
+	private static function inlineImages(Mail $mailer): void
 	{
 		$bodyText = $mailer->Body;
 
 		// RegEx patterns to detect images
 		$patterns = [
 			// srcset="**URL**" e.g. source tags
-			'/srcset=\"?([^"]*)\"?/i',
+			'/srcset\s?=\s?\"?([^"]*)\"?/i',
 			// src="**URL**" e.g. img tags
-			'/src=\"?([^"]*)\"?/i',
+			'/src\s?=\s?\"?([^"]*)\"?/i',
 			// url(**URL**) nad url("**URL**") i.e. inside CSS
-			'/url\(\"?([^"\(\)]*)\"?\)/i',
+			'/url\(\s?\"?([^"\(\)]*)\"?\s?\)/i',
 		];
 
 		// Cache of images so we don't inline them multiple times
@@ -689,46 +707,56 @@ HTML;
 		// Running counter of images, used to create the attachment IDs in the message
 		$imageIndex = 0;
 
+		/**
+		 * Regular Expression replace callback
+		 *
+		 * @param   array  $matches  Matched expression. [0] => entire string, [1] => image URL / path
+		 *
+		 * @return string
+		 *
+		 * @since version
+		 */
+		$replaceCallback = function (array $matches) use ($mailer, &$foundImages, &$imageIndex): string {
+			// Abort if it's not a file type we can inline
+			if (!self::isInlineableFileExtension($matches[1]))
+			{
+				return $matches[0];
+			}
+
+			// Try to get the local absolute filesystem path of the referenced media file
+			$localPath = self::getLocalAbsolutePath(self::normalizeURL($matches[1]));
+
+			// Abort if this was not a relative / absolute URL pointing to our own site
+			if (empty($localPath))
+			{
+				return $matches[0];
+			}
+
+			// Abort if the referenced file does not exist
+			if (!@file_exists($localPath) || !@is_file($localPath))
+			{
+				return $matches[0];
+			}
+
+			// Make sure the inlined image is cached; prevent inlining the same file multiple times
+			if (!array_key_exists($localPath, $foundImages))
+			{
+				$imageIndex++;
+				$mailer->AddEmbeddedImage($localPath, 'img' . $imageIndex, basename($localPath));
+				$foundImages[$localPath] = $imageIndex;
+			}
+
+			return str_replace($matches[1], 'cid:img' . $foundImages[$localPath], $matches[0]);
+		};
+
 		// Run a RegEx search & replace for each pattern
 		foreach ($patterns as $pattern)
 		{
-			// $matches[0]: the entire string matched by RegEx; $matches[1]: just the path / URL
-			$bodyText = preg_replace_callback($pattern, function (array $matches) use ($mailer, &$foundImages, &$imageIndex): string {
-				// Abort if it's not a file type we can inline
-				if (!self::isInlineableFileExtension($matches[1]))
-				{
-					return $matches[0];
-				}
-
-				// Try to get the local absolute filesystem path of the referenced media file
-				$localPath = self::getLocalAbsolutePath(self::normalizeURL($matches[1]));
-
-				// Abort if this was not a relative / absolute URL pointing to our own site
-				if (empty($localPath))
-				{
-					return $matches[0];
-				}
-
-				// Abort if the referenced file does not exist
-				if (!@file_exists($localPath) || !@is_file($localPath))
-				{
-					return $matches[0];
-				}
-
-				// Make sure the inlined image is cached; prevent inlining the same file multiple times
-				if (!array_key_exists($localPath, $foundImages))
-				{
-					$imageIndex++;
-					$mailer->AddEmbeddedImage($localPath, 'img' . $imageIndex, basename($localPath));
-					$foundImages[$localPath] = $imageIndex;
-				}
-
-				return str_replace($matches[1], $toReplace = 'cid:img' . $foundImages[$localPath], $matches[0]);
-			}, $bodyText);
+			$bodyText = preg_replace_callback($pattern, $replaceCallback, $bodyText);
 		}
 
 		// Return the processed email content
-		return $bodyText;
+		$mailer->Body = $bodyText;
 	}
 
 	/**
