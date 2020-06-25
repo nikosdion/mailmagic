@@ -121,8 +121,19 @@ final class plgSystemMailmagicProcess
 	 */
 	private static function getSiteURL(): string
 	{
-		// TODO Handle the case of a CLI application
-		return Uri::base(false);
+		$siteRoot = self::$pluginParams->get('site_root', '');
+		$siteRoot = rtrim(trim($siteRoot), '/');
+
+		if (empty($siteRoot))
+		{
+			$siteRoot = Uri::base(false);
+
+			self::$pluginParams->set('site_root', $siteRoot);
+		}
+
+		$uri = Uri::getInstance($siteRoot);
+
+		return $uri->toString(['scheme', 'user', 'pass', 'host', 'port', 'path']);
 	}
 
 	/**

@@ -64,6 +64,15 @@
                 </field>
 
                 <field
+                        name="site_root"
+                        type="url"
+                        label="PLG_SYSTEM_MAILMAGIC_FIELD_SITE_ROOT_LABEL"
+                        description="PLG_SYSTEM_MAILMAGIC_FIELD_SITE_ROOT_DESC"
+                        default=""
+                        class="input-xlarge"
+                    />
+
+                <field
                         name="html2text"
                         type="radio"
                         label="PLG_SYSTEM_MAILMAGIC_FIELD_HTML2TEXT_LABEL"
