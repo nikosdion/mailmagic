@@ -1,7 +1,7 @@
 {
 	"name": "nikosdion/mailmagic",
 	"type": "project",
-	"description": "Mail Magic - Convert plain text Joomla emails into beautiful, HTML emails",
+	"description": "MailMagic - Convert plain text Joomla emails into beautiful, HTML emails",
 	"keywords": [
 		"email",
 		"joomla",

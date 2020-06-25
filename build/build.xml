@@ -5,7 +5,7 @@
   ~  @license   GNU General Public License version 3, or later
   -->
 
-<project name="MailMagic" description="Mail Magic" default="git" >
+<project name="MailMagic" description="MailMagic" default="git" >
 	<import file="${phing.dir}/../../buildfiles/phing/common.xml" />
 
 	<!--

@@ -1,10 +1,13 @@
-# Mail Magic
+# MailMagic
 
 Convert plain text Joomla emails into beautiful, HTML emails
 
 ## What does it do?
 
 Converts your Joomla plain text emails in rich, HTML emails using your custom templates.
+
+Additionally, it can create a plain text representation of your HTML-only emails for clients who prefer to receive
+plain-text email only.
 
 ## Features
 
@@ -19,13 +22,9 @@ I primarily wrote this for my own, personal use. I do publish occasional pre-bui
 
 ## How to use
 
-Install _and enable_ the plugin. 
+In its simplest, install _and enable_ the plugin. All your plain text emails are now converted to HTML.  
 
-Create your HTML email template and upload it into the `plugins/system/mailmagic/templates` folder of your site. Do not name your template `default.html`; this file will be overwritten on each release. There is a README.txt file in that folder explaining what you can use in your HTML email template.
-
-Edit the System – MailMagic plugin and select your email template.
-
-That's it. All plain-text emails sent from your site will be magically converted to HTML using your template.
+For further information please check [the documentation](doc/USING.md).
 
 ### Remember that e-mails are NOT web pages
 
