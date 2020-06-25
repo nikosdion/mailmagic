@@ -17,6 +17,20 @@ Converts your Joomla plain text emails in rich, HTML emails using your custom te
 
 I primarily wrote this for my own, personal use. I do publish occasional pre-built Joomla installation packages and make them available through [my GitHub repository's Releases page](https://github.com/nikosdion/mailmagic/releases).
 
+## How to use
+
+Install _and enable_ the plugin. 
+
+Create your HTML email template and upload it into the `plugins/system/mailmagic/templates` folder of your site. Do not name your template `default.html`; this file will be overwritten on each release. There is a README.txt file in that folder explaining what you can use in your HTML email template.
+
+Edit the System – MailMagic plugin and select your email template.
+
+That's it. All plain-text emails sent from your site will be magically converted to HTML using your template.
+
+### Remember that e-mails are NOT web pages
+
+Each mail client may render your e-mail slightly different and may disable entire features you're used to using with regular HTML and CSS in web pages. Forget about CSS grid, absolute / relative positioning, flexbox and so on. You'll have to use tables like it's 1998 all over again. Images, especially background ones, may display in a weird way or not at all. Dark mode support will be wonky, if it even works, depending on the mail client. Generally speaking, if something you do in HTML and CSS doesn't work it's not MailMagic's fault, it's how the mail client parses and displays the email. You have been warned.
+
 ## Support and contributions
 
 This is a project I maintain on my spare time. Having a family and business doesn't leave me with much spare time. Please try to be concise and considerate when filing a GitHub issue.
@@ -29,13 +43,7 @@ Finally, be advised that I am rather direct in my communication. I am neither an
 
 ## Building the package
 
-### Quick'n'dirty build
-
-In the simplest form you can ZIP the `plugins/system/mailmagic` folder's contents and install it on your site.
-
-### Full build process
-
-If you want to go through the build process I use you will need to have the following tools:
+If you want to go through the build process you will need to have the following tools:
 
 * A command line environment. Using Bash under Linux / Mac OS X works best.
 * A PHP CLI binary in your path
